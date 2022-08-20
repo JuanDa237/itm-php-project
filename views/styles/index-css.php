@@ -1,6 +1,5 @@
 <style>
-	/* GLOBAL STYLES
- */
+	/* GLOBAL STYLES */
 	/* Padding below the footer and lighter body text */
 
 	body {
@@ -9,7 +8,6 @@
 		padding-bottom: 3rem;
 		color: #5a5a5a;
 	}
-
 
 	/* CUSTOMIZE THE CAROUSEL */
 
@@ -29,7 +27,6 @@
 		height: 32rem;
 	}
 
-
 	/* MARKETING CONTENT */
 
 	/* Center align the text within the three columns below the carousel */
@@ -43,8 +40,6 @@
 		margin-left: .75rem;
 	}
 
-
-
 	/* Featurettes */
 
 	.featurette-divider {
@@ -56,7 +51,6 @@
 	.featurette-heading {
 		letter-spacing: -.05rem;
 	}
-
 
 	/* RESPONSIVE CSS */
 
