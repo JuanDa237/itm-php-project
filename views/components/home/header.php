@@ -14,7 +14,7 @@
 	</ul>
 
 	<div class="col-md-3 text-end">
-		<a class="btn btn-outline-primary me-2" href="login.php">Login</a>
+		<a class="btn btn-outline-primary me-2" href="views/login.php">Login</a>
 		<a class="btn btn-primary">Sign-up</a>
 	</div>
 </header>

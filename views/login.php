@@ -3,7 +3,7 @@
 $doc_title = "Company Name | Login";
 ?>
 
-<?php require("./views/layout/start.php") ?>
+<?php require("./layout/start.php") ?>
 
 <section class="h-100">
 	<div class="container h-100">
@@ -42,9 +42,12 @@ $doc_title = "Company Name | Login";
 									<input type="checkbox" name="remember" id="remember" class="form-check-input">
 									<label for="remember" class="form-check-label">Remember Me</label>
 								</div>
-								<button type="submit" class="btn btn-primary ms-auto">
+								<!-- <button type="submit" class="btn btn-primary ms-auto">
 									Login
-								</button>
+								</button> -->
+								<a href="dashboard.php" class="btn btn-primary ms-auto">
+									Login
+								</a>
 							</div>
 						</form>
 					</div>
@@ -62,4 +65,4 @@ $doc_title = "Company Name | Login";
 	</div>
 </section>
 
-<?php require("./views/layout/end.php") ?>
+<?php require("./layout/end.php") ?>
