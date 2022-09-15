@@ -18,7 +18,7 @@ if (isset($_POST['action'])) {
 		$error = true;
 		$user = new User("", "");
 	} else {
-		header("Location:user-list.php");
+		header("Location:dashboard.php");
 	}
 }
 
