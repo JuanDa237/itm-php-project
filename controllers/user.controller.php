@@ -41,6 +41,18 @@ class ControlUser
 		return $this->connectionDB->executeSqlCommand($this->getListSqlCommand());
 	}
 
+	function login(User $user)
+	{
+		$newUser = null;
+		$recordSet = $this->connectionDB->executeSqlCommand($user->getLoginSqlCommand());
+
+		if ($row = $recordSet->fetch_array(MYSQLI_BOTH)) {
+			$newUser = new User($row['user'], $row['password']);
+		}
+
+		return $newUser;
+	}
+
 	// Sql Commands
 
 	private function getDeleteSqlCommand(int $id)

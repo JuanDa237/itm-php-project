@@ -59,7 +59,7 @@ $doc_title = "Company Name | User Form";
 		</div>
 	</div>
 	<div class="row mb-2">
-		<form id="form" class="col-12 w-25" action="user-form.php" method="post">
+		<form id="form" class="col-12 w-25" action="user-form.php" method="POST">
 			<div class="row mb-2">
 				<div class="col-12">
 					<label for="user" class="form-label">User</label>

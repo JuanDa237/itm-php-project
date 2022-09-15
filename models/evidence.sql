@@ -142,3 +142,7 @@ CREATE TABLE EvidenceToParagrafo (
 	FOREIGN KEY (evidence_id) REFERENCES evidence(id),
 	FOREIGN KEY (paragrafo_id) REFERENCES paragrafo(id)
 );
+
+-- Insert Data
+
+INSERT INTO user VALUES (NULL, 'admin', 'admin');

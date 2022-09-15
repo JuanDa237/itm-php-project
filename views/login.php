@@ -1,4 +1,26 @@
 <?php
+include '../models/User.php';
+include '../controllers/connectionDB.controller.php';
+include '../controllers/user.controller.php';
+
+$user = new User("", "");
+$error = false;
+
+// Submit Login Handle
+
+if (isset($_POST['action'])) {
+	$user = new User($_POST['user'], $_POST['password']);
+	$userController = new ControlUser();
+	$user = $userController->login($user);
+
+	if (is_null($user)) {
+		$error = true;
+		$user = new User("", "");
+	} else {
+		header("Location:user-list.php");
+	}
+}
+
 // start.php vars
 $doc_title = "Company Name | Login";
 ?>
@@ -15,46 +37,33 @@ $doc_title = "Company Name | Login";
 				<div class="card shadow-lg">
 					<div class="card-body p-5">
 						<h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
-						<form method="POST" class="needs-validation" novalidate="" autocomplete="off">
+
+						<?php if ($error) { ?>
+							<div class="alert alert-danger" role="alert">
+								The User And Password Are Wrong!
+							</div>
+						<?php } ?>
+
+						<form id="form" action="login.php" method="POST">
 							<div class="mb-3">
-								<label class="mb-2 text-muted" for="email">E-Mail Address</label>
-								<input id="email" type="email" class="form-control" name="email" value="" required autofocus>
-								<div class="invalid-feedback">
-									Email is invalid
-								</div>
+								<label for="user" class="form-label">User</label>
+								<input class="form-control" type="text" placeholder="Juan" name="user" id="user" value="<?php echo $user->getUser() ?>" />
+								<div class="invalid-feedback" id="user-error"></div>
 							</div>
 
 							<div class="mb-3">
-								<div class="mb-2 w-100">
-									<label class="text-muted" for="password">Password</label>
-									<a href="forgot.html" class="float-end">
-										Forgot Password?
-									</a>
-								</div>
-								<input id="password" type="password" class="form-control" name="password" required>
-								<div class="invalid-feedback">
-									Password is required
-								</div>
+								<label for="password" class="form-label">Password</label>
+								<input class="form-control" type="password" placeholder="*****" name="password" id="password" value="<?php echo $user->getPassword() ?>" />
+								<div class="invalid-feedback" id="password-error"></div>
 							</div>
 
 							<div class="d-flex align-items-center">
-								<div class="form-check">
-									<input type="checkbox" name="remember" id="remember" class="form-check-input">
-									<label for="remember" class="form-check-label">Remember Me</label>
-								</div>
-								<!-- <button type="submit" class="btn btn-primary ms-auto">
+								<input type="hidden" name="action" value="login">
+								<button type="submit" class="btn btn-primary ms-auto" name="btn" value="login">
 									Login
-								</button> -->
-								<a href="dashboard.php" class="btn btn-primary ms-auto">
-									Login
-								</a>
+								</button>
 							</div>
 						</form>
-					</div>
-					<div class="card-footer py-3 border-0">
-						<div class="text-center">
-							Don't have an account? <a href="register.html" class="text-dark">Create One</a>
-						</div>
 					</div>
 				</div>
 				<div class="text-center mt-5 text-muted">
@@ -64,5 +73,47 @@ $doc_title = "Company Name | Login";
 		</div>
 	</div>
 </section>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		document.getElementById("form").addEventListener('submit', validateForm);
+	});
+
+	function validateForm(event) {
+		event.preventDefault();
+
+		let errors = false;
+		let user = document.getElementById('user');
+		let userError = document.getElementById("user-error");
+
+		if (user.value.trim().length == 0) {
+			user.classList.add("is-invalid");
+			errors = true;
+
+			userError.innerHTML = 'Please provide a user.';
+		} else {
+			user.classList.remove("is-invalid");
+			userError.innerHTML = '';
+		}
+
+		let password = document.getElementById('password');
+		let passwordError = document.getElementById("password-error");
+
+		if (password.value.trim().length == 0) {
+			password.classList.add("is-invalid");
+			errors = true;
+
+			passwordError.innerHTML = 'Please provide a password.';
+		} else {
+			password.classList.remove("is-invalid");
+			passwordError.innerHTML = '';
+		}
+
+		if (errors)
+			return;
+		else
+			this.submit();
+	}
+</script>
 
 <?php require("./layout/end.php") ?>

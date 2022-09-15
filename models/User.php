@@ -44,4 +44,9 @@ class User
 	{
 		return "UPDATE user SET user='" . $this->user . "', password='" . $this->password . "' WHERE id='" . $id . "'";
 	}
+
+	function getLoginSqlCommand()
+	{
+		return "SELECT * FROM user WHERE user='" .  $this->user . "' AND password='"  . $this->password . "'";
+	}
 }
