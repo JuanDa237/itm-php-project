@@ -11,7 +11,7 @@
 				<a class="nav-link px-2 text-muted" aria-current="page" href="evidence.php">Evidencias</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link px-2 text-muted" aria-current="page" href="user.php">Usuarios</a>
+				<a class="nav-link px-2 text-muted" aria-current="page" href="user-list.php">Usuarios</a>
 			</li>
 		</ul>
 	</footer>
