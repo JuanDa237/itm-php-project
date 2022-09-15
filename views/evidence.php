@@ -8,7 +8,7 @@ $doc_title = "Company Name | Evidence List";
 
 <!-- Content -->
 <div class="container flex-grow-1 marketing">
-	<h1 class="mt-5">Listado De Evidencias</h1>
+	<h1 class="mt-5">Evidences List</h1>
 </div>
 
 <?php require("./components/dashboard/footer.php") ?>

@@ -37,16 +37,16 @@ class User
 
 	function getCreateSqlCommand()
 	{
-		return "INSERT INTO user VALUES(NULL, '" . $this->user . "','" . $this->password . "')";
+		return "CALL createUser('{$this->user}', '{$this->password}')";
 	}
 
 	function getUpdateSqlCommand(int $id)
 	{
-		return "UPDATE user SET user='" . $this->user . "', password='" . $this->password . "' WHERE id='" . $id . "'";
+		return "CALL updateUser({$id}, '{$this->user}', '{$this->password}')";
 	}
 
 	function getLoginSqlCommand()
 	{
-		return "SELECT * FROM user WHERE user='" .  $this->user . "' AND password='"  . $this->password . "'";
+		return "CALL login('{$this->user}', '{$this->password}')";
 	}
 }

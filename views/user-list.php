@@ -17,11 +17,11 @@ $doc_title = "Company Name | User List";
 <!-- Content -->
 <div class="container flex-grow-1 marketing">
 	<div class="row my-3">
-		<div class="col-6">
-			<h1 class="m-0">Listado De Usuarios</h1>
+		<div class="col-12 col-md-6 mb-3 mb-md-0">
+			<h1 class="m-0">Users List</h1>
 		</div>
-		<div class="col-6">
-			<a class="btn btn-primary float-end" href="user-form.php?action=create">Add User</a>
+		<div class="col-12 col-md-6">
+			<a class="btn btn-primary float-md-end" href="user-form.php?action=create">Add User</a>
 		</div>
 	</div>
 	<div class="row mb-2">

@@ -51,40 +51,35 @@ $doc_title = "Company Name | User Form";
 <!-- Content -->
 <div class="container flex-grow-1 marketing">
 	<div class="row my-3">
-		<div class="col-6">
-			<h1 class="m-0">Formulario De Usuarios</h1>
+		<div class="col-12 col-md-6 mb-3 mb-md-0">
+			<h1 class="m-0">User Form</h1>
 		</div>
-		<div class="col-6">
-			<a class="btn btn-primary float-end" href="user-list.php">Ir atras</a>
+		<div class="col-12 col-md-6">
+			<a class="btn btn-primary float-md-end" href="user-list.php">Go Back</a>
 		</div>
 	</div>
 	<div class="row mb-2">
-		<form id="form" class="col-12 w-25" action="user-form.php" method="POST">
-			<div class="row mb-2">
-				<div class="col-12">
-					<label for="user" class="form-label">User</label>
-					<input class="form-control" type="text" placeholder="Juan" name="user" id="user" value="<?php echo $user->getUser() ?>" />
-					<div class="invalid-feedback" id="user-error"></div>
-				</div>
+		<form id="form" class="col-12 col-xl-6" action="user-form.php" method="POST">
+			<div class="col-12 mb-2">
+				<label for="user" class="form-label">User</label>
+				<input class="form-control" type="text" placeholder="Juan" name="user" id="user" value="<?php echo $user->getUser() ?>" />
+				<div class="invalid-feedback" id="user-error"></div>
 			</div>
-			<div class="row mb-2">
-				<div class="col-12">
-					<label for="password" class="form-label">Password</label>
-					<input class="form-control" type="text" placeholder="Secure123" name="password" id="password" value="<?php echo $user->getPassword() ?>" />
-					<div class="invalid-feedback" id="password-error"></div>
-				</div>
+			<div class="col-12 mb-2">
+				<label for="password" class="form-label">Password</label>
+				<input class="form-control" type="text" placeholder="Secure123" name="password" id="password" value="<?php echo $user->getPassword() ?>" />
+				<div class="invalid-feedback" id="password-error"></div>
 			</div>
-			<div class="row mb-2">
-				<div class="col-12 d-flex justify-content-end">
-					<input type="hidden" name="id" value=<?= $id ?>>
-					<input type="hidden" name="action" value=<?= $action ?>>
-					<input class="btn btn-primary text-capitalize" type="submit" name="btn" value="<?= $action ?>" />
-				</div>
+			<div class="col-12 mb-2 d-flex justify-content-end">
+				<input type="hidden" name="id" value=<?= $id ?>>
+				<input type="hidden" name="action" value=<?= $action ?>>
+				<input class="btn btn-primary text-capitalize" type="submit" name="btn" value="<?= $action ?>" />
 			</div>
 		</form>
 	</div>
 </div>
 
+<!-- JS Form Validations -->
 <script>
 	document.addEventListener("DOMContentLoaded", function() {
 		document.getElementById("form").addEventListener('submit', validateForm);

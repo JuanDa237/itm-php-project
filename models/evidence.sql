@@ -18,8 +18,8 @@ CREATE TABLE evidence (
 
 CREATE TABLE user (
 	id INT NOT NULL AUTO_INCREMENT,
-	user VARCHAR(100) NOT NULL,
-	password VARCHAR(100) NOT NULL,
+	user VARCHAR(30) NOT NULL,
+	password VARCHAR(30) NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -146,3 +146,43 @@ CREATE TABLE EvidenceToParagrafo (
 -- Insert Data
 
 INSERT INTO user VALUES (NULL, 'admin', 'admin');
+
+-- Procedures
+
+DELIMITER //
+
+-- User Procedures
+
+CREATE PROCEDURE getUserList()
+BEGIN
+	SELECT * FROM user;
+END //
+
+CREATE PROCEDURE getUser(IN idVal VARCHAR(30))
+BEGIN
+	SELECT * FROM user WHERE id=idVal;
+END //
+
+CREATE PROCEDURE createUser(IN userVal VARCHAR(30), IN passwordVal VARCHAR(30))
+BEGIN
+	INSERT INTO user VALUES (NULL, userVal, passwordVal);
+END //
+
+CREATE PROCEDURE updateUser(IN idVal INT, IN userVal VARCHAR(30), IN passwordVal VARCHAR(30))
+BEGIN
+	UPDATE user SET user=userVal, password=passwordVal WHERE id=idVal;
+END //
+
+CREATE PROCEDURE deleteUser(IN idVal VARCHAR(30))
+BEGIN
+	DELETE FROM user WHERE id=idVal;
+END //
+
+CREATE PROCEDURE login(IN userVal VARCHAR(30), IN passwordVal VARCHAR(30))
+BEGIN
+	SELECT * FROM user WHERE user=userVal AND password=passwordVal;
+END //
+
+-- Evidence Procedures
+
+DELIMITER ;

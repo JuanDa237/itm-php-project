@@ -3,7 +3,8 @@ include '../models/User.php';
 include '../controllers/connectionDB.controller.php';
 include '../controllers/user.controller.php';
 
-$user = new User("", "");
+// Set user for practicality reasons
+$user = new User("admin", "admin");
 $error = false;
 
 // Submit Login Handle

@@ -57,16 +57,16 @@ class ControlUser
 
 	private function getDeleteSqlCommand(int $id)
 	{
-		return "DELETE FROM user WHERE id='" . $id . "'";
+		return "CALL deleteUser({$id})";
 	}
 
 	private function getOneSqlCommand(int $id)
 	{
-		return "SELECT * FROM user WHERE id='" . $id . "'";
+		return "CALL getUser({$id})";
 	}
 
 	private function getListSqlCommand()
 	{
-		return "SELECT * FROM user";
+		return "CALL getUserList()";
 	}
 }
