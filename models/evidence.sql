@@ -143,10 +143,6 @@ CREATE TABLE EvidenceToParagrafo (
 	FOREIGN KEY (paragrafo_id) REFERENCES paragrafo(id)
 );
 
--- Insert Data
-
-INSERT INTO user VALUES (NULL, 'admin', 'admin');
-
 -- Procedures
 
 DELIMITER //
@@ -183,6 +179,36 @@ BEGIN
 	SELECT * FROM user WHERE user=userVal AND password=passwordVal;
 END //
 
--- Evidence Procedures
+-- Evidence procedures
+
+CREATE PROCEDURE getEvidenceList()
+BEGIN
+	SELECT * FROM evidence;
+END //
+
+CREATE PROCEDURE getEvidence(IN idVal VARCHAR(30))
+BEGIN
+	SELECT * FROM evidence WHERE id=idVal;
+END //
+
+CREATE PROCEDURE createEvidence(IN titleVal VARCHAR(100), IN descriptionVal VARCHAR(200), IN dirVal VARCHAR(200), IN tipeVal VARCHAR(30), IN latVal INT, IN lonVal INT)
+BEGIN
+	INSERT INTO evidence VALUES (NULL, titleVal, descriptionVal, dirVal, tipeVal, latVal, lonVal, NULL);
+END //
+
+CREATE PROCEDURE updateEvidence(IN idVal INT, IN titleVal VARCHAR(100), IN descriptionVal VARCHAR(200), IN dirVal VARCHAR(200), IN tipeVal VARCHAR(30), IN latVal INT, IN lonVal INT)
+BEGIN
+	UPDATE evidence SET title = titleVal, description = descriptionVal, dir = dirVal, tipe = tipeVal, lat = latVal, lon = lonVal WHERE id=idVal;
+END //
+
+CREATE PROCEDURE deleteEvidence(IN idVal VARCHAR(30))
+BEGIN
+	DELETE FROM evidence WHERE id=idVal;
+END //
 
 DELIMITER ;
+
+-- Insert Data
+
+INSERT INTO user VALUES (NULL, 'admin', 'admin');
+INSERT INTO evidence VALUES (NULL, 'Resolucion', '123', 'abc', 'def', 1, 2, NULL);

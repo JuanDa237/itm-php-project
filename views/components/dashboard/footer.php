@@ -8,7 +8,7 @@
 
 		<ul class="nav col-md-4 justify-content-end">
 			<li class="nav-item">
-				<a class="nav-link px-2 text-muted" aria-current="page" href="evidence.php">Evidences</a>
+				<a class="nav-link px-2 text-muted" aria-current="page" href="evidence-list.php">Evidences</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link px-2 text-muted" aria-current="page" href="user-list.php">Users</a>
