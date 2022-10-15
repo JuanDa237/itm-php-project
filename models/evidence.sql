@@ -248,6 +248,11 @@ BEGIN
 	DELETE FROM author WHERE id=idVal;
 END //
 
+CREATE PROCEDURE createEvidenceAuthor(IN idVal INT, IN idAuthorVal INT)
+BEGIN
+	INSERT INTO evidenceAuthor VALUES (NULL, idVal, idAuthorVal);
+END //
+
 DELIMITER ;
 
 -- Insert Data

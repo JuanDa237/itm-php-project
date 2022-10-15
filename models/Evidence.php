@@ -9,8 +9,9 @@ class Evidence
 	private string $tipe;
 	private int $lat;
 	private int $lon;
+	private array $authors;
 
-	function __construct(string $title, string $description, string $dir, string $tipe, int $lat, int $lon)
+	function __construct(string $title, string $description, string $dir, string $tipe, int $lat, int $lon, array $authors)
 	{
 		$this->title = $title;
 		$this->description = $description;
@@ -18,6 +19,7 @@ class Evidence
 		$this->tipe = $tipe;
 		$this->lat = $lat;
 		$this->lon = $lon;
+		$this->authors = $authors;
 	}
 
 	// Getters
@@ -52,6 +54,11 @@ class Evidence
 		return $this->lon;
 	}
 
+	function getAuthors()
+	{
+		return $this->authors;
+	}
+
 	// Setters
 
 	function setTitle($title)
@@ -82,6 +89,11 @@ class Evidence
 	function setLon($lon)
 	{
 		$this->lon = $lon;
+	}
+
+	function setAuthors($authors)
+	{
+		$this->authors = $authors;
 	}
 
 	// SQL Commands

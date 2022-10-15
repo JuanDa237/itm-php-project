@@ -1,7 +1,9 @@
 <?php
 include '../models/Evidence.php';
+include '../models/Author.php';
 include '../controllers/connectionDB.controller.php';
 include '../controllers/evidence.controller.php';
+include '../controllers/author.controller.php';
 
 $action = "";
 $id = 0;
@@ -10,7 +12,11 @@ if (isset($_GET['action'])) $action = $_GET['action'];
 if (isset($_GET['id'])) $id = $_GET['id'];
 
 // Query evidence
-$evidence = new Evidence("", "", "", "", 0, 0);
+$evidence = new Evidence("", "", "", "", 0, 0, []);
+
+// Query authors
+$controlAuthor = new ControlAuthor();
+$authors = $controlAuthor->getList();
 
 if ($action == 'edit') {
 	$controlEvidence = new ControlEvidence();
@@ -21,7 +27,14 @@ if ($action == 'edit') {
 $evidenceController = new ControlEvidence();
 
 if (isset($_POST['action'])) {
-	$evidence = new Evidence($_POST['title'], $_POST['description'], $_POST['dir'], $_POST['tipe'], $_POST['lat'], $_POST['lon']);
+	$newAuthors = $_POST['authors'];
+	$authorsIds =  array();
+
+	for ($i = 0; $i < count($newAuthors); $i++) {
+		array_push($authorsIds, $newAuthors[$i]["id"]);
+	}
+
+	$evidence = new Evidence($_POST['title'], $_POST['description'], $_POST['dir'], $_POST['tipe'], $_POST['lat'], $_POST['lon'], $authorsIds);
 
 	switch ($_POST['action']) {
 		case 'create':
@@ -50,6 +63,7 @@ $doc_title = "Company Name | Evidence Form";
 <?php require("./components/dashboard/header.php") ?>
 
 <!-- Content -->
+
 <div class="container flex-grow-1 marketing">
 	<div class="row my-3">
 		<div class="col-12 col-md-6 mb-3 mb-md-0">
@@ -102,6 +116,34 @@ $doc_title = "Company Name | Evidence Form";
 				<img src="<?php echo $evidence->getDir() ?>" alt="">
 			</div>
 
+			<div class="col-12 mb-2">
+				<div class="card">
+					<div class="card-header">
+						Authors
+					</div>
+					<div id="author-container" class="card-body">
+						<div class="mb-2">
+							<button type="button" class="btn btn-primary" onclick="addAuthor()">Add Author</button>
+							<button type="button" class="btn btn-danger" onclick="deleteAuthor()">Delete</button>
+						</div>
+
+						<div id="author-select" class="row mb-2">
+							<div class="col-8">
+								<select class="form-select" name="authors[0][id]" id="author">
+									<option value="">Select One</option>
+
+									<?php while ($res = mysqli_fetch_array($authors)) { ?>
+										<option value="<?php echo $res['id'] ?>"><?php echo $res['name'] ?></option>
+									<?php // End while
+									}
+									?>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div class="col-12 mb-2 d-flex justify-content-end">
 				<input type="hidden" name="id" value=<?= $id ?>>
 				<input type="hidden" name="action" value=<?= $action ?>>
@@ -110,6 +152,30 @@ $doc_title = "Company Name | Evidence Form";
 		</form>
 	</div>
 </div>
+
+<!-- JS Authors Handlers -->
+<script>
+	var container = document.getElementById('author-container');
+	var row = document.getElementById('author-select');
+
+	var authors = [];
+	authors.push(row);
+
+	function addAuthor(e) {
+		const copy = row.cloneNode(true);
+
+		copy.getElementsByTagName('select')[0].setAttribute('name', `authors[${authors.length}][id]`);
+
+		authors.push(copy);
+		container.appendChild(copy);
+	}
+
+	function deleteAuthor() {
+		let last = authors.pop();
+		last.remove();
+	}
+</script>
+
 
 <!-- JS Form Validations -->
 <script>
