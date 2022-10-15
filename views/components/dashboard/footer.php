@@ -13,6 +13,9 @@
 			<li class="nav-item">
 				<a class="nav-link px-2 text-muted" aria-current="page" href="user-list.php">Users</a>
 			</li>
+			<li class="nav-item">
+				<a class="nav-link px-2 text-muted" aria-current="page" href="author-list.php">Authors</a>
+			</li>
 		</ul>
 	</footer>
 </div>

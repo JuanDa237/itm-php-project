@@ -50,6 +50,21 @@ CREATE TABLE userToRole (
 	FOREIGN KEY (role_id) REFERENCES role(id)
 );
 
+CREATE TABLE author (
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(100) NOT NULL,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE evidenceAuthor (
+	id INT NOT NULL AUTO_INCREMENT,
+	evidence_id INT NOT NULL,
+	author_id INT NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (evidence_id) REFERENCES evidence(id),
+	FOREIGN KEY (author_id) REFERENCES author(id)
+);
+
 -- Condiciones
 
 CREATE TABLE condicion (
@@ -206,9 +221,37 @@ BEGIN
 	DELETE FROM evidence WHERE id=idVal;
 END //
 
+-- Author procedures
+
+CREATE PROCEDURE getAuthorsList()
+BEGIN
+	SELECT * FROM author;
+END //
+
+CREATE PROCEDURE getAuthor(IN idVal VARCHAR(30))
+BEGIN
+	SELECT * FROM author WHERE id=idVal;
+END //
+
+CREATE PROCEDURE createAuthor(IN nameVal VARCHAR(100))
+BEGIN
+	INSERT INTO author VALUES (NULL, nameVal);
+END //
+
+CREATE PROCEDURE updateAuthor(IN idVal INT, IN nameVal VARCHAR(100))
+BEGIN
+	UPDATE author SET name = nameVal WHERE id=idVal;
+END //
+
+CREATE PROCEDURE deleteAuthor(IN idVal VARCHAR(30))
+BEGIN
+	DELETE FROM author WHERE id=idVal;
+END //
+
 DELIMITER ;
 
 -- Insert Data
 
 INSERT INTO user VALUES (NULL, 'admin', 'admin');
 INSERT INTO evidence VALUES (NULL, 'Resolucion', '123', 'abc', 'def', 1, 2, NULL);
+INSERT INTO author VALUES (NULL, 'author');

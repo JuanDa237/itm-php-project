@@ -98,6 +98,10 @@ $doc_title = "Company Name | Evidence Form";
 				<div class="invalid-feedback" id="lon-error"></div>
 			</div>
 
+			<div class="col-12 mb-2">
+				<img src="<?php echo $evidence->getDir() ?>" alt="">
+			</div>
+
 			<div class="col-12 mb-2 d-flex justify-content-end">
 				<input type="hidden" name="id" value=<?= $id ?>>
 				<input type="hidden" name="action" value=<?= $action ?>>
