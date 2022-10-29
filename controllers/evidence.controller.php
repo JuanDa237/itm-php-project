@@ -9,7 +9,7 @@ class ControlEvidence
 		$this->connectionDB = new ConnectionDB();
 	}
 
-	function create(Evidence $evidence)
+	function create(Evidence $evidence, int $userId, $state)
 	{
 		$this->connectionDB->executeSqlCommand($evidence->getCreateSqlCommand());
 
@@ -26,12 +26,15 @@ class ControlEvidence
 			$this->connectionDB->executeSqlCommand($this->getInsertAuthorCommand($id, $authors[$i]));
 		}
 
+		$this->connectionDB->executeSqlCommand($this->getCreateEvidenceStateChangesCommand($id, $userId, '', $state));
+
 		return $id;
 	}
 
-	function update(int $id, Evidence $evidence)
+	function update(int $id, Evidence $evidence, $userId, $state)
 	{
 		$this->connectionDB->executeSqlCommand($evidence->getUpdateSqlCommand($id));
+		$this->connectionDB->executeSqlCommand($this->getCreateEvidenceStateChangesCommand($id, $userId, '', $state));
 	}
 
 	function delete(int $id)
@@ -81,5 +84,10 @@ class ControlEvidence
 	private function getLastIdCommand()
 	{
 		return "SELECT MAX(id) as max FROM evidence";
+	}
+
+	private function getCreateEvidenceStateChangesCommand($evidenceId, $userId, $description, $stateVal)
+	{
+		return "CALL createEvidenceStateChanges({$evidenceId}, {$userId}, '{$description}', '{$stateVal}')";
 	}
 }

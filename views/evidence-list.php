@@ -35,6 +35,7 @@ $doc_title = "Company Name | Evidence List";
 						<td>Tipo</td>
 						<td>Latitud</td>
 						<td>Longitud</td>
+						<td>Estado</td>
 						<td>Actions</td>
 					</tr>
 				</thead>
@@ -47,6 +48,27 @@ $doc_title = "Company Name | Evidence List";
 							<td><?php echo $res['tipe'] ?> </td>
 							<td><?php echo $res['lat'] ?> </td>
 							<td><?php echo $res['lon'] ?> </td>
+							<td>
+								<?php
+								switch ($res['state']) {
+									case 'unverified':
+										echo '<span class="badge rounded-pill text-bg-danger">';
+										echo $res['state'];
+										echo '</span>';
+										break;
+									case 'verified':
+										echo '<span class="badge rounded-pill text-bg-info">';
+										echo $res['state'];
+										echo '</span>';
+										break;
+									case 'validated':
+										echo '<span class="badge rounded-pill text-bg-success">';
+										echo $res['state'];
+										echo '</span>';
+										break;
+								}
+								?>
+							</td>
 							<td>
 								<div class="btn-group">
 									<a class="btn btn-primary" href="evidence-form.php?action=edit&id=<?= $res["id"] ?>">Edit</a>

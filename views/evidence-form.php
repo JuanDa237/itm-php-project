@@ -23,6 +23,9 @@ if ($action == 'edit') {
 	$evidence = $controlEvidence->getOne($id);
 }
 
+// Get Loged User
+$userId = 1; // For now is generic
+
 // Handle Submit
 $evidenceController = new ControlEvidence();
 
@@ -35,13 +38,14 @@ if (isset($_POST['action'])) {
 	}
 
 	$evidence = new Evidence($_POST['title'], $_POST['description'], $_POST['dir'], $_POST['tipe'], $_POST['lat'], $_POST['lon'], $authorsIds);
+	$state = $_POST['state'];
 
 	switch ($_POST['action']) {
 		case 'create':
-			$evidenceController->create($evidence);
+			$evidenceController->create($evidence, $userId, $state);
 			break;
 		case 'edit':
-			$evidenceController->update($_POST['id'], $evidence);
+			$evidenceController->update($_POST['id'], $evidence, $userId, $state);
 			break;
 		case 'default':
 			echo "This actions doesn't exist";
@@ -89,8 +93,8 @@ $doc_title = "Company Name | Evidence Form";
 			</div>
 
 			<div class="col-12 mb-2">
-				<label for="dir" class="form-label">Dir</label>
-				<input class="form-control" type="text" placeholder="Dir" name="dir" id="dir" value="<?php echo $evidence->getDir() ?>" />
+				<label for="dir" class="form-label">Image Url</label>
+				<input class="form-control" type="text" placeholder="Image Url" name="dir" id="dir" value="<?php echo $evidence->getDir() ?>" />
 				<div class="invalid-feedback" id="dir-error"></div>
 			</div>
 
@@ -102,14 +106,23 @@ $doc_title = "Company Name | Evidence Form";
 
 			<div class="col-12 mb-2">
 				<label for="lat" class="form-label">Latitude</label>
-				<input class="form-control" type="number" name="lat" id="lat" value="<?php echo $evidence->getLat() ?>" />
+				<input class="form-control" type="number" name="lat" id="lat" value="<?php echo $evidence->getLat() ?>" required />
 				<div class="invalid-feedback" id="lat-error"></div>
 			</div>
 
 			<div class="col-12 mb-2">
 				<label for="lon" class="form-label">Longitude</label>
-				<input class="form-control" type="number" name="lon" id="lon" value="<?php echo $evidence->getLon() ?>" />
+				<input class="form-control" type="number" name="lon" id="lon" value="<?php echo $evidence->getLon() ?>" required />
 				<div class="invalid-feedback" id="lon-error"></div>
+			</div>
+
+			<div class="col-12 mb-2">
+				<label for="state" class="form-label">Estado</label>
+				<select class="form-select" name="state" id="state">
+					<option value="unverified">No verificado</option>
+					<option value="verified">Verificado</option>
+					<option value="validated">Validado</option>
+				</select>
 			</div>
 
 			<div class="col-12 mb-2">
