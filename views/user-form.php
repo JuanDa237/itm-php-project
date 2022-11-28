@@ -2,6 +2,7 @@
 include '../models/User.php';
 include '../controllers/connectionDB.controller.php';
 include '../controllers/user.controller.php';
+include '../controllers/role.controller.php';
 
 $action = "";
 $id = 0;
@@ -9,7 +10,11 @@ if (isset($_GET['action'])) $action = $_GET['action'];
 if (isset($_GET['id'])) $id = $_GET['id'];
 
 // Query user
-$user = new User("", "");
+$user = new User("", "", []);
+
+// Query roles
+$controlRole = new ControlRole();
+$roles = $controlRole->getList();
 
 if ($action == 'edit') {
 	$controlUser = new ControlUser();
@@ -20,7 +25,14 @@ if ($action == 'edit') {
 $userController = new ControlUser();
 
 if (isset($_POST['action'])) {
-	$user = new User($_POST['user'], $_POST['password']);
+	$newRoles = $_POST['roles'];
+	$rolesIds =  array();
+
+	for ($i = 0; $i < count($newRoles); $i++) {
+		array_push($rolesIds, $newRoles[$i]["id"]);
+	}
+
+	$user = new User($_POST['user'], $_POST['password'], $rolesIds);
 
 	switch ($_POST['action']) {
 		case 'create':
@@ -70,6 +82,35 @@ $doc_title = "Company Name | User Form";
 				<input class="form-control" type="text" placeholder="Secure123" name="password" id="password" value="<?php echo $user->getPassword() ?>" />
 				<div class="invalid-feedback" id="password-error"></div>
 			</div>
+
+			<div class="col-12 mb-2">
+				<div class="card">
+					<div class="card-header">
+						Roles
+					</div>
+					<div id="role-container" class="card-body">
+						<div class="mb-2">
+							<button type="button" class="btn btn-primary" onclick="addRole()">Add Role</button>
+							<button type="button" class="btn btn-danger" onclick="deleteRole()">Delete</button>
+						</div>
+
+						<div id="role-select" class="row mb-2">
+							<div class="col-8">
+								<select class="form-select" name="roles[0][id]" id="role">
+									<option value="">Select One</option>
+
+									<?php while ($res = mysqli_fetch_array($roles)) { ?>
+										<option value="<?php echo $res['id'] ?>"><?php echo $res['role'] ?></option>
+									<?php // End while
+									}
+									?>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div class="col-12 mb-2 d-flex justify-content-end">
 				<input type="hidden" name="id" value=<?= $id ?>>
 				<input type="hidden" name="action" value=<?= $action ?>>
@@ -78,6 +119,29 @@ $doc_title = "Company Name | User Form";
 		</form>
 	</div>
 </div>
+
+<!-- JS Authors Handlers -->
+<script>
+	var container = document.getElementById('role-container');
+	var row = document.getElementById('role-select');
+
+	var roles = [];
+	roles.push(row);
+
+	function addRole(e) {
+		const copy = row.cloneNode(true);
+
+		copy.getElementsByTagName('select')[0].setAttribute('name', `roles[${roles.length}][id]`);
+
+		roles.push(copy);
+		container.appendChild(copy);
+	}
+
+	function deleteRole() {
+		let last = roles.pop();
+		last.remove();
+	}
+</script>
 
 <!-- JS Form Validations -->
 <script>

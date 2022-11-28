@@ -4,11 +4,13 @@ class User
 {
 	private string $user;
 	private string $password;
+	private array $roles;
 
-	function __construct(string $user, string $password)
+	function __construct(string $user, string $password, array $roles)
 	{
 		$this->user = $user;
 		$this->password = $password;
+		$this->roles = $roles;
 	}
 
 	// Getters And Setters
@@ -31,6 +33,16 @@ class User
 	function getPassword()
 	{
 		return $this->password;
+	}
+
+	function setRoles($roles)
+	{
+		$this->roles = $roles;
+	}
+
+	function getRoles()
+	{
+		return $this->roles;
 	}
 
 	// SQL Commands

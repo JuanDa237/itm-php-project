@@ -12,6 +12,21 @@ class ControlUser
 	function create(User $user)
 	{
 		$this->connectionDB->executeSqlCommand($user->getCreateSqlCommand());
+
+		$result = $this->connectionDB->executeSqlCommand($this->getLastIdCommand());
+		$id = -1;
+
+		if ($row = $result->fetch_array(MYSQLI_BOTH)) {
+			$id = $row['max'];
+		}
+
+		$roles = $user->getRoles();
+
+		for ($i = 0; $i < count($roles); $i++) {
+			$this->connectionDB->executeSqlCommand($this->getInsertRoleCommand($id, $roles[$i]));
+		}
+
+		return $id;
 	}
 
 	function update(int $id, User $user)
@@ -30,7 +45,7 @@ class ControlUser
 		$recordSet = $this->connectionDB->executeSqlCommand($this->getOneSqlCommand($id));
 
 		if ($row = $recordSet->fetch_array(MYSQLI_BOTH)) {
-			$user = new User($row['user'], $row['password']);
+			$user = new User($row['user'], $row['password'], []);
 		}
 
 		return $user;
@@ -47,7 +62,7 @@ class ControlUser
 		$recordSet = $this->connectionDB->executeSqlCommand($user->getLoginSqlCommand());
 
 		if ($row = $recordSet->fetch_array(MYSQLI_BOTH)) {
-			$newUser = new User($row['user'], $row['password']);
+			$newUser = new User($row['user'], $row['password'], []);
 		}
 
 		return $newUser;
@@ -68,5 +83,15 @@ class ControlUser
 	private function getListSqlCommand()
 	{
 		return "CALL getUserList()";
+	}
+
+	private function getLastIdCommand()
+	{
+		return "SELECT MAX(id) as max FROM user";
+	}
+
+	private function getInsertRoleCommand($id, $roleId)
+	{
+		return "CALL createUserRole({$id}, {$roleId})";
 	}
 }

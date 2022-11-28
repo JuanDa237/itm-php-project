@@ -41,7 +41,7 @@ CREATE TABLE evidenceStateChanges (
 	FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
-CREATE TABLE userToRole (
+CREATE TABLE userRole (
 	id INT NOT NULL AUTO_INCREMENT,
 	user_id INT NOT NULL,
 	role_id INT NOT NULL,
@@ -802,6 +802,18 @@ BEGIN
 	SELECT * FROM user WHERE user=userVal AND password=passwordVal;
 END //
 
+-- Roles Procedures
+
+CREATE PROCEDURE getRoleList()
+BEGIN
+	SELECT * FROM role;
+END //
+
+CREATE PROCEDURE createUserRole(IN idVal INT, IN idRolVal INT)
+BEGIN
+	INSERT INTO userRole VALUES (NULL, idVal, idRolVal);
+END //
+
 -- Evidence procedures
 
 CREATE PROCEDURE getEvidenceList()
@@ -879,6 +891,17 @@ DELIMITER ;
 -- Insert Data
 
 INSERT INTO user VALUES (NULL, 'admin', 'admin');
+INSERT INTO role VALUES (NULL, 'administrator');
+INSERT INTO userRole VALUES (NULL, 1, 1);
+
+INSERT INTO user VALUES (NULL, 'checker', 'checker');
+INSERT INTO role VALUES (NULL, 'checker');
+INSERT INTO userRole VALUES (NULL, 2, 2);
+
+INSERT INTO user VALUES (NULL, 'validator', 'validator');
+INSERT INTO role VALUES (NULL, 'validator');
+INSERT INTO userRole VALUES (NULL, 3, 3);
+
 INSERT INTO evidence VALUES (NULL, 'Resolucion', '123', 'abc', 'def', 1, 2, NULL);
 INSERT INTO evidenceStateChanges VALUES (NULL, 1, 1, '', 'unverified', NULL);
 INSERT INTO author VALUES (NULL, 'author');
