@@ -8,7 +8,7 @@
 
 		<ul class="nav col-md-4 justify-content-end">
 			<?php
-			if (!$isAdmin) {
+			if (!$isAdmin || $isValidator || $isChecker) {
 			?>
 				<li class="nav-item">
 					<a class="nav-link px-2 text-muted" aria-current="page" href="evidence-list.php">Evidences</a>
@@ -28,7 +28,7 @@
 			?>
 
 			<?php
-			if (!$isAdmin) {
+			if (!$isAdmin || $isValidator || $isChecker) {
 			?>
 				<li class="nav-item">
 					<a class="nav-link px-2 text-muted" aria-current="page" href="author-list.php">Authors</a>
