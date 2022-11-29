@@ -61,8 +61,16 @@ class ControlUser
 		$newUser = null;
 		$recordSet = $this->connectionDB->executeSqlCommand($user->getLoginSqlCommand());
 
-		if ($row = $recordSet->fetch_array(MYSQLI_BOTH)) {
-			$newUser = new User($row['user'], $row['password'], []);
+		if ($recordSet->num_rows > 0) {
+			$user = "";
+			$roles = array();
+
+			while ($row = mysqli_fetch_array($recordSet)) {
+				$user = $row['user'];
+				array_push($roles, $row['role']);
+			}
+
+			$newUser = new User($user, "", $roles);
 		}
 
 		return $newUser;

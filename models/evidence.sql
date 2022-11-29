@@ -799,7 +799,10 @@ END //
 
 CREATE PROCEDURE login(IN userVal VARCHAR(30), IN passwordVal VARCHAR(30))
 BEGIN
-	SELECT * FROM user WHERE user=userVal AND password=passwordVal;
+	SELECT u.user as user, r.role as role FROM user u
+	INNER JOIN userrole ur ON u.id = ur.user_id
+	INNER JOIN role r ON ur.role_id = r.id
+	WHERE u.user=userVal AND u.password=passwordVal;
 END //
 
 -- Roles Procedures

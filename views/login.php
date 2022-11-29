@@ -4,20 +4,24 @@ include '../controllers/connectionDB.controller.php';
 include '../controllers/user.controller.php';
 
 // Set user for practicality reasons
-$user = new User("admin", "admin");
+$user = new User("", "", []);
 $error = false;
 
 // Submit Login Handle
 
 if (isset($_POST['action'])) {
-	$user = new User($_POST['user'], $_POST['password']);
+	$user = new User($_POST['user'], $_POST['password'], []);
 	$userController = new ControlUser();
 	$user = $userController->login($user);
 
 	if (is_null($user)) {
 		$error = true;
-		$user = new User("", "");
+		$user = new User("", "", []);
 	} else {
+		session_start();
+		$_SESSION["user"] = $user->getUser();
+		$_SESSION["roles"] = $user->getRoles();
+
 		header("Location:dashboard.php");
 	}
 }

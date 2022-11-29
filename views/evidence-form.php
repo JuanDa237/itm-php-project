@@ -38,11 +38,15 @@ if (isset($_POST['action'])) {
 	}
 
 	$evidence = new Evidence($_POST['title'], $_POST['description'], $_POST['dir'], $_POST['tipe'], $_POST['lat'], $_POST['lon'], $authorsIds);
-	$state = $_POST['state'];
+
+	$state = "unverified";
+	if (isset($_POST['state'])) {
+		$state = $_POST['state'];
+	}
 
 	switch ($_POST['action']) {
 		case 'create':
-			$evidenceController->create($evidence, $userId, $state);
+			$evidenceController->create($evidence, $userId, "unverified");
 			break;
 		case 'edit':
 			$evidenceController->update($_POST['id'], $evidence, $userId, $state);
@@ -116,14 +120,20 @@ $doc_title = "Company Name | Evidence Form";
 				<div class="invalid-feedback" id="lon-error"></div>
 			</div>
 
-			<div class="col-12 mb-2">
-				<label for="state" class="form-label">Estado</label>
-				<select class="form-select" name="state" id="state">
-					<option value="unverified">No verificado</option>
-					<option value="verified">Verificado</option>
-					<option value="validated">Validado</option>
-				</select>
-			</div>
+			<?php
+			if ($action == "edit" && $isValidator) {
+			?>
+				<div class="col-12 mb-2">
+					<label for="state" class="form-label">Estado</label>
+					<select class="form-select" name="state" id="state">
+						<option value="unverified">No verificado</option>
+						<option value="verified">Verificado</option>
+						<option value="validated">Validado</option>
+					</select>
+				</div>
+			<?php // End if
+			}
+			?>
 
 			<div class="col-12 mb-2">
 				<img src="<?php echo $evidence->getDir() ?>" alt="">
