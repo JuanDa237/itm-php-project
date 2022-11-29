@@ -905,6 +905,11 @@ INSERT INTO user VALUES (NULL, 'validator', 'validator');
 INSERT INTO role VALUES (NULL, 'validator');
 INSERT INTO userRole VALUES (NULL, 3, 3);
 
+INSERT INTO user VALUES (NULL, 'allroles', 'allroles');
+INSERT INTO userRole VALUES (NULL, 4, 1);
+INSERT INTO userRole VALUES (NULL, 4, 2);
+INSERT INTO userRole VALUES (NULL, 4, 3);
+
 INSERT INTO evidence VALUES (NULL, 'Resolucion', '123', 'abc', 'def', 1, 2, NULL);
 INSERT INTO evidenceStateChanges VALUES (NULL, 1, 1, '', 'unverified', NULL);
 INSERT INTO author VALUES (NULL, 'author');
