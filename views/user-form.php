@@ -10,7 +10,7 @@ if (isset($_GET['action'])) $action = $_GET['action'];
 if (isset($_GET['id'])) $id = $_GET['id'];
 
 // Query user
-$user = new User("", "", []);
+$actualUser = new User("", "", []);
 
 // Query roles
 $controlRole = new ControlRole();
@@ -18,7 +18,7 @@ $roles = $controlRole->getList();
 
 if ($action == 'edit') {
 	$controlUser = new ControlUser();
-	$user = $controlUser->getOne($id);
+	$actualUser = $controlUser->getOne($id);
 }
 
 // Handle Submit
@@ -32,14 +32,14 @@ if (isset($_POST['action'])) {
 		array_push($rolesIds, $newRoles[$i]["id"]);
 	}
 
-	$user = new User($_POST['user'], $_POST['password'], $rolesIds);
+	$actualUser = new User($_POST['user'], $_POST['password'], $rolesIds);
 
 	switch ($_POST['action']) {
 		case 'create':
-			$userController->create($user);
+			$userController->create($actualUser);
 			break;
 		case 'edit':
-			$userController->update($_POST['id'], $user);
+			$userController->update($_POST['id'], $actualUser);
 			break;
 		case 'default':
 			echo "This actions doesn't exist";
@@ -74,12 +74,12 @@ $doc_title = "Company Name | User Form";
 		<form id="form" class="col-12 col-xl-6" action="user-form.php" method="POST">
 			<div class="col-12 mb-2">
 				<label for="user" class="form-label">User</label>
-				<input class="form-control" type="text" placeholder="Juan" name="user" id="user" value="<?php echo $user->getUser() ?>" />
+				<input class="form-control" type="text" placeholder="Juan" name="user" id="user" value="<?php echo $actualUser->getUser() ?>" />
 				<div class="invalid-feedback" id="user-error"></div>
 			</div>
 			<div class="col-12 mb-2">
 				<label for="password" class="form-label">Password</label>
-				<input class="form-control" type="text" placeholder="Secure123" name="password" id="password" value="<?php echo $user->getPassword() ?>" />
+				<input class="form-control" type="text" placeholder="Secure123" name="password" id="password" value="<?php echo $actualUser->getPassword() ?>" />
 				<div class="invalid-feedback" id="password-error"></div>
 			</div>
 
