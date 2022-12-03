@@ -14,7 +14,7 @@ $actualUser = new User("", "", []);
 
 // Query roles
 $controlRole = new ControlRole();
-$roles = $controlRole->getList();
+$newRoles2 = $controlRole->getList();
 
 if ($action == 'edit') {
 	$controlUser = new ControlUser();
@@ -99,7 +99,7 @@ $doc_title = "Company Name | User Form";
 								<select class="form-select" name="roles[0][id]" id="role">
 									<option value="">Select One</option>
 
-									<?php while ($res = mysqli_fetch_array($roles)) { ?>
+									<?php while ($res = mysqli_fetch_array($newRoles2)) { ?>
 										<option value="<?php echo $res['id'] ?>"><?php echo $res['role'] ?></option>
 									<?php // End while
 									}
